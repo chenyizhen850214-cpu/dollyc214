@@ -9,7 +9,13 @@
 :root{--ink:#2f352f;--muted:#697069;--line:#e8e2d6;--cream:#faf7f0;--green:#496653;--greenbg:#eef4ee;--gold:#a27b43;--goldbg:#f6efe3;--pink:#b97f82;--pinkbg:#f8eeee;--white:#fff}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif}
 .wrap{max-width:980px;margin:auto;padding:18px}.hero{padding:34px 28px;border-radius:30px;background:linear-gradient(135deg,#fffaf1,#edf3ea 62%,#f4ece2);border:1px solid var(--line)}
-.eyebrow{font-size:12px;letter-spacing:2.4px;color:var(--muted);font-weight:800}.hero h1{font:64px/0.95 Georgia,serif;margin:10px 0 12px;letter-spacing:-1px}.sub{color:#646c64}.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.pill{background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700}
+.eyebrow{font-size:12px;letter-spacing:2.4px;color:var(--muted);font-weight:800}.hero h1{font:64px/0.95 Georgia,serif;margin:10px 0 12px;letter-spacing:-1px}.sub{color:#646c64}.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.countdown{margin-top:22px;padding:18px 20px;border-radius:20px;background:rgba(255,255,255,.72);border:1px solid rgba(73,102,83,.16);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.countdown-label{font-size:12px;letter-spacing:1.5px;color:var(--muted);font-weight:800}
+.countdown-number{font:700 30px/1 Georgia,serif;color:var(--green);margin-top:5px}
+.countdown-sub{font-size:11px;color:#8a918a;margin-top:5px}
+.countdown-icon{font-size:30px;opacity:.75}
+@media(max-width:700px){.countdown{padding:15px}.countdown-number{font-size:25px}}.pill{background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700}
 .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0}.tab{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px;text-align:left;cursor:pointer;min-height:72px}.tab b{display:block}.tab small{color:var(--muted)}.tab.active{background:var(--greenbg);border-color:#b8cdbb}
 .card{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:20px;margin:12px 0}.head{display:flex;justify-content:space-between;gap:10px;align-items:center}.head h2{font-size:20px;margin:0}.badge{font-size:11px;background:#f4f1eb;color:var(--muted);border-radius:999px;padding:6px 9px}
 .timeline{position:relative;padding-left:30px;margin-top:16px}.timeline:before{content:"";position:absolute;left:9px;top:5px;bottom:5px;width:2px;background:var(--line)}.event{position:relative;padding:0 0 20px}.dot{position:absolute;left:-26px;top:4px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--green)}.time{font-size:12px;font-weight:800;color:var(--green)}.title{font-weight:800;margin-top:3px}.detail{font-size:13px;color:var(--muted);line-height:1.6;margin-top:3px}
@@ -27,6 +33,14 @@
 <h1>BANGKOK ♡</h1>
 <div class="sub">Dolly's Solo Trip · 5 Days 4 Nights</div>
 <div class="pills"><span class="pill">10/26（一）— 10/30（五）</span><span class="pill">Solo Trip</span><span class="pill">Yoga · Massage · Beauty · Food</span></div>
+<div class="countdown">
+  <div>
+    <div class="countdown-label">COUNTDOWN TO BANGKOK</div>
+    <div class="countdown-number" id="countdown">計算中…</div>
+    <div class="countdown-sub">出發：2026/10/26 13:25 · JX745</div>
+  </div>
+  <div class="countdown-icon">✈︎</div>
+</div>
 </header>
 
 <section class="card">
@@ -89,6 +103,26 @@ const days=[
 {theme:'',title:'最後一天｜Yoga × Massage × JX742 回家',route:[['Yoga','Yoga Thonglor Bangkok'],['Breakfast','Thong Lor Bangkok'],['Massage','Massage Thong Lo Bangkok'],['Hotel','Karaarom Hotel Bangkok'],['Airport','Suvarnabhumi Airport Bangkok']],note:'JX742 13:45 自 BKK 起飛。回程日不塞景點；建議 07:00 Yoga、08:15 早餐、09:00 短版按摩，10:00 左右退房並前往機場，目標 10:45–11:00 抵達 BKK。',events:[['07:00','🧘 最後一堂 Yoga','Yin / Stretch / Mobility，控制在 45–60 分鐘'],['08:15','☕ 早餐＋咖啡','慢慢吃，回飯店整理行李'],['09:00','💆 最後按摩','45–60 分鐘；以足部／肩頸放鬆為主'],['10:00','🧳 回飯店取行李','退房、確認護照與隨身物品'],['10:15','🚗 前往 BKK','以叫車／飯店協助安排為主'],['13:45','✈️ JX742','BKK → TPE，直飛約 3 小時 40 分']]},
 ];
 const dayEl=document.getElementById('day');
+
+function updateCountdown(){
+  const target=new Date('2026-10-26T13:25:00+08:00').getTime();
+  const now=Date.now();
+  const diff=target-now;
+  const el=document.getElementById('countdown');
+  if(!el)return;
+  if(diff<=0){
+    el.textContent='旅程開始 ♡';
+    return;
+  }
+  const totalSeconds=Math.floor(diff/1000);
+  const days=Math.floor(totalSeconds/86400);
+  const hours=Math.floor((totalSeconds%86400)/3600);
+  const mins=Math.floor((totalSeconds%3600)/60);
+  const secs=totalSeconds%60;
+  el.textContent=days+' 天 '+String(hours).padStart(2,'0')+' 小時 '+String(mins).padStart(2,'0')+' 分 '+String(secs).padStart(2,'0')+' 秒';
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
 function render(i){
  const d=days[i];
  dayEl.innerHTML='<section class="card"><div class="head"><h2>'+d.title+'</h2><span class="badge">DAY '+(i+1)+'</span></div><div class="timeline">'+d.events.map(e=>'<div class="event"><span class="dot"></span><div class="time">'+e[0]+'</div><div class="title">'+e[1]+'</div><div class="detail">'+e[2]+'</div></div>').join('')+'</div></section>'+
