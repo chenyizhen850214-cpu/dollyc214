@@ -142,7 +142,7 @@ function render(i){
  document.querySelectorAll('.tab').forEach((b,n)=>b.classList.toggle('active',n===i));
 }
 document.querySelectorAll('.tab').forEach((b,i)=>b.addEventListener('click',()=>render(i)));
-const items=['確認 karaarom Hotel 入住／退房資訊','確認四間早晨咖啡店營業時間與分店','把新加入的購物店存進 Google Maps／確認營業時間','確認 Bar Us 10/27 20:00–21:30 訂位碼 TBFHY8','確認 10/29 Nusara 預約','把 Coffee Map 存進 Google Maps／確認當日營業時間','確認 JX745 10/26 13:25 TPE → 16:30 BKK','確認 JX742 10/30 13:45 BKK → 18:25 TPE','預約每日 Yoga（依課表調整）','預約 Thai Makeup','確認 Jay Fai 10/28 現金與排隊方式','預約 10/29 Nusara','確認 10/29 Spa','安排 BKK ↔ karaarom 交通','出發前再次確認所有預約與營業時間'];
+const items=['確認 karaarom Hotel 入住／退房資訊','確認四間早晨咖啡店營業時間與分店','把新加入的購物店存進 Google Maps／確認營業時間','確認 Bar Us 10/27 20:00–21:30 訂位碼 TBFHY8','確認 10/29 Nusara 預約','把 Coffee Map 存進 Google Maps／確認當日營業時間','確認 JX745 10/26 13:25 TPE → 16:30 BKK','確認 JX742 10/30 13:45 BKK → 18:25 TPE','預約每日 Yoga（依課表調整）','確認並預約 SANG SLUA TEA SERVICE（10/29 建議 11:00）','確認 Jay Fai 10/28 現金與排隊方式','預約 10/29 Nusara','確認 10/29 Spa','安排 BKK ↔ karaarom 交通','出發前再次確認所有預約與營業時間'];
 const checks=document.getElementById('checks');const saved=JSON.parse(localStorage.getItem('bangkokTripChecklist')||'[]');
 items.forEach((t,i)=>{const l=document.createElement('label');l.className='check';l.innerHTML='<input type="checkbox" '+(saved[i]?'checked':'')+'><span>'+t+'</span>';checks.appendChild(l)});
 function update(){const all=[...checks.querySelectorAll('input')],done=all.filter(x=>x.checked).length;document.getElementById('progress').textContent=done+' / '+all.length;all.forEach((x,i)=>x.parentElement.classList.toggle('done',x.checked));localStorage.setItem('bangkokTripChecklist',JSON.stringify(all.map(x=>x.checked)))}
