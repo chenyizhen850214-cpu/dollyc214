@@ -138,7 +138,7 @@ updateCountdown();
 setInterval(updateCountdown,1000);
 function render(i){
  const d=days[i];
- dayEl.innerHTML='<section class="card"><div class="head"><h2>'+d.title+'</h2><span class="badge">DAY '+(i+1)+'</span></div><div class="timeline">'+d.events.map(e=>'<div class="event"><span class="dot"></span><div class="time">'+e[0]+'</div><div class="title">'+e[1]+'</div><div class="detail">'+e[2]+'</div></div>').join('')+'</div></section>'+
+ dayEl.innerHTML='<section class="card"><div class="head"><h2>'+d.title+'</h2><span class="badge">DAY '+(i+1)+'</span></div><div class="timeline">'+d.events.map(e=>'<div class="event"><span class="dot"></span><div class="time">'+e[0]+'</div><div class="title">'+(e[3]?'<a href="'+map(e[3])+'" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-decoration-color:#b8cdbb;text-underline-offset:3px">'+e[1]+' ↗</a>':e[1])+'</div><div class="detail">'+e[2]+'</div></div>').join('')+'</div></section>'+
  '<section class="card"><div class="head"><h2>🗺️ 今日動線</h2><span class="badge">MAP</span></div><div class="route">'+d.route.map((x,n)=>(n?'<span class="arrow">→</span>':'')+'<a class="node" href="'+map(x[1])+'" target="_blank" rel="noopener noreferrer">'+x[0]+' ↗</a>').join('')+'</div><div class="maplabel">點擊行程名稱或下方地點 → 開啟 Google Maps 搜尋；各站可分別導航</div></section>'+
  '<section class="card"><div class="note '+d.theme+'"><b>小提醒</b><br>'+d.note+'</div></section>';
  document.querySelectorAll('.tab').forEach((b,n)=>b.classList.toggle('active',n===i));
